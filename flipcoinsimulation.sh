@@ -43,3 +43,4 @@ do
 		 percentageDictionary[$i]=$(( (100*${resultDictionary[$i]})/ $trials ))
 done
 
+echo $(printf "%s \n " ${percentageDictionary[@]} ${!percentageDictionary[@]} | sort -nr )
