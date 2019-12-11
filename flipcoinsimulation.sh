@@ -1,35 +1,45 @@
 #!/bin/bash/ -x
 
-#LOCAL VARIABLES
-isHead=1
-isTail=0
-HCount=0
-TCount=0
+headCount=0
+tailCount=0
 
-declare -A dicResult
+declare -A resultDictionary
+declare -A percentageDictionary
 
-echo "WELCOME TO FLIPCOIN SIMULATOR"
-read -p "how many times you want to Flip a coin?" trials
+echo "WELCOME TO FLIPCOIN SIMULATION"
+read -p "how much time you flip coin " trials
+read -p "how many coins " numberOfCoin
 
-for((i=0;i<trials;i++))
+function flipcoin() 
+{
+	for (( i=1; i<=$trials; i++ ))
+	do
+		string=""
+		for(( j=0; j<$numberOfCoin; j++ ))
+		do
+   			outCome=$(( RANDOM % 2 ))
+     			if [ $outCome == 1 ]
+				then
+  						string=$string"H"
+          			headCount=$(( $headCount + 1 ))
+				else
+           			string=$string"T"
+          			tailCount=$(( $tailCount + 1))
+				fi
+		done
+		echo key : $string
+		resultDictionary["$string"]=$(( ${resultDictionary["$string"]} + 1 ))  
+		done
+}
+flipcoin
+
+echo ${!resultDictionary[@]}
+echo ${resultDictionary[@]}
+
+
+for i in "${!resultDictionary[@]}"
 do
 
-	result=$((RANDOM%2))
-	if [ $result -eq $isHead ]
-	then
-		HCount=$((Hcount+1))
-		dicResult[heads]=$HCount
-	else
-		TCount=$((TCount+1))
-		dicResult[tail]=$TCount
-	fi
-	echo $result
+		 percentageDictionary[$i]=$(( (100*${resultDictionary[$i]})/ $trials ))
 done
 
-total=$(( $HCount+$TCount ))
-head=$(( $HCount*100 ))
-headPercent=$(( $head/$total ))
-tail=$(( $TCount*100 ))
-tailPercent=$(( $tail/$total ))
-echo $headPercent
-echo $tailPercent
