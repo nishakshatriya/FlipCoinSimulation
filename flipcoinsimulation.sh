@@ -1,5 +1,6 @@
-g13
 #!/bin/bash/ -x
+
+echo "WELCOME TO FLIPCOIN SIMULATION"
 
 headCount=0
 tailCount=0
@@ -7,7 +8,7 @@ tailCount=0
 declare -A resultDictionary
 declare -A percentDictionary
 
-echo "WELCOME TO FLIPCOIN SIMULATION"
+
 read -p "how much time you flip coin " trials
 read -p "how many coins " coins
 
@@ -42,8 +43,6 @@ do
 
 		 percentDictionary[$i]=$(( (100*${resultDictionary[$i]})/ $trials ))
 done
-
-#echo $(printf "%s \n " ${percentageDictionary[@]} ${!percentageDictionary[@]} | sort -nr | head -2 )
 
 for i in ${!percentDictionary[@]}
 do
