@@ -30,22 +30,32 @@ function flipcoin()
 				fi
 		done
 		resultDictionary["$string"]=$(( ${resultDictionary["$string"]} + 1 ))  
-		done
+	done
 }
-flipcoin
 
-echo ${!resultDictionary[@]}
-echo ${resultDictionary[@]}
-
-
-for i in "${!resultDictionary[@]}"
-do
+function getPercent()
+{
+	for i in "${!resultDictionary[@]}"
+	do
 
 		 percentDictionary[$i]=$(( (100*${resultDictionary[$i]})/ $trials ))
-done
+	done
+}
 
-for i in ${!percentDictionary[@]}
-do
-	echo $i ${percentDictionary[$i]}
+function sorting()
+{
 
-done | sort -k2 -nr | awk 'NR==1{print $1" "$2}'
+	for i in ${!percentDictionary[@]}
+	do
+		echo $i ${percentDictionary[$i]}
+
+	done | sort -k2 -nr | awk 'NR==1{print $1" "$2}'
+}
+
+function main()
+{
+	flipcoin
+	getPercent
+	sorting
+}
+main
