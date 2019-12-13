@@ -6,8 +6,7 @@ headCount=0
 tailCount=0
 
 declare -A resultDictionary
-declare -A percentDictionary
-
+declare -A headTailCombinations
 
 read -p "how much time you flip coin " trials
 read -p "how many coins " coins
@@ -19,15 +18,15 @@ function flipcoin()
 		string=""
 		for(( j=0; j<$coins; j++ ))
 		do
-   			outCome=$(( RANDOM % 2 ))
-     			if [ $outCome == 1 ]
-				then
-  						string=$string"H"
-          			headCount=$(( $headCount + 1 ))
-				else
-           			string=$string"T"
-          			tailCount=$(( $tailCount + 1))
-				fi
+   		outCome=$(( RANDOM % 2 ))
+     		if [ $outCome == 1 ]
+			then
+  				string=$string"H"
+          	headCount=$(( $headCount + 1 ))
+			else
+				string=$string"T"
+				tailCount=$(( $tailCount + 1))
+			fi
 		done
 		resultDictionary["$string"]=$(( ${resultDictionary["$string"]} + 1 ))  
 	done
@@ -37,17 +36,15 @@ function getPercent()
 {
 	for i in "${!resultDictionary[@]}"
 	do
-
-		 percentDictionary[$i]=$(( (100*${resultDictionary[$i]})/ $trials ))
+		 headTailCombinations[$i]=$(( (100*${resultDictionary[$i]})/ $trials ))
 	done
 }
 
 function sorting()
 {
-
-	for i in ${!percentDictionary[@]}
+	for i in ${!headTailCombinations[@]}
 	do
-		echo $i ${percentDictionary[$i]}
+		echo $i ${headTailCombinations[$i]}
 
 	done | sort -k2 -nr | awk 'NR==1{print $1" "$2}'
 }
